@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowd Link IT Solutions | Managed IT & Cybersecurity</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --gradient: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul { list-style: none; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .cta-btn {
+            background: var(--gradient);
+            color: var(--bg-dark);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        /* Mobile nav open state */
+        .nav-open {
+            display: flex !important;
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            right: 0;
+            background: #0f172a;
+            width: 100%;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- MAIN / HERO --- */
+        main {
+            margin-top: 72px; /* offset for fixed nav */
+        }
+
+        header {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1rem;
+            background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 40%);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* --- SECTIONS COMMON --- */
+        section {
+            padding: 5rem 10%;
+            scroll-margin-top: 90px; /* help with anchor targeting under fixed nav */
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title .bar {
+            height: 4px;
+            width: 60px;
+            background: var(--gradient);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* --- SERVICES --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- ABOUT --- */
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;   /* center horizontally */
+            flex-wrap: wrap;
+            text-align: center;        /* center text by default */
+        }
+
+        .about-text {
+            flex: 1;
+            max-width: 700px;          /* keep it nice and narrow */
+        }
+
+        .about-text h3 {
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .about-text h2 {
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        /* --- CONTACT --- */
+        .contact-box {
+            background: var(--bg-card);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-box p {
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+        
+        .email-btn-large {
+            display: inline-block;
+            background: var(--gradient);
+            color: var(--bg-dark);
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35);
+        }
+
+        .email-btn-large:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+
+            header {
+                padding: 2rem 1.5rem;
+            }
+
+            section {
+                padding: 3.5rem 7%;
+            }
+
+            .about-text {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">CROWD <span>LINK</span> IT</div>
+        <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact" class="cta-btn">Email Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header id="home">
+            <div class="hero-content">
+                <div class="hero-subtitle">Managed IT • Cybersecurity • Procurement</div>
+                <h1>Connecting You to <br><span>Secure Technology</span></h1>
+                <p>
+                    Premier Managed IT support, cybersecurity services, and strategic technology procurement.
+                    Serving businesses and clients across Texas with a people-first mindset.
+                </p>
+                <a href="#contact" class="cta-btn" style="padding: 1rem 2rem; font-size: 1.05rem;">
+                    Get Support Now
+                </a>
+            </div>
+        </header>
+
+        <section id="services">
+            <div class="section-title">
+                <h2>Our Expertise</h2>
+                <div class="bar"></div>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Cybersecurity & Defense</h3>
+                    <p>
+                        Protect your digital assets with enterprise-grade security. We handle threat detection,
+                        firewall management, endpoint hardening, and data protection so you can work with confidence.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🖥️</div>
+                    <h3>Managed IT Support</h3>
+                    <p>
+                        From troubleshooting slow Wi-Fi to full network builds, we provide approachable,
+                        friendly technical support for remote teams, small businesses, and individuals.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">📦</div>
+                    <h3>Strategic Procurement</h3>
+                    <p>
+                        We specialize in sourcing business-critical hardware and hard-to-find technology.
+                        From workstations and servers to networking and specialty devices, we manage vendors,
+                        pricing, and delivery so you don’t have to.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" style="background: rgba(255,255,255,0.02);">
+            <div class="about-container">
+                <div class="about-text">
+                    <h3>Who We Are</h3>
+                    <h2>More Than Just Tech Support</h2>
+                    <p>
+                        At Crowd Link IT Solutions, we believe in the power of connection. Based in Texas,
+                        we bridge the gap between complex technology and the people who rely on it every day.
+                    </p>
+                    <p>
+                        Whether you need to secure your network, support a growing remote workforce, or source
+                        specific high-value assets, we bring enterprise discipline with a local, approachable feel.
+                    </p>
+                    <p><strong>Connecting People. Securing Data. Sourcing Assets.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-title">
+                <h2>Let's Connect</h2>
+                <div class="bar"></div>
+            </div>
+            <div class="contact-box">
+                <h3>Ready to upgrade your IT experience?</h3>
+                <p>
+                    Whether you have a security concern, a support request, or a procurement need,
+                    reach out to our team today and we’ll follow up with next steps.
+                </p>
+                <a href="mailto:Contact@crowdlink.com" class="email-btn-large">
+                    Contact@crowdlink.com
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Crowd Link IT Solutions. All Rights Reserved.</p>
+        <p>Proudly Serving Texas.</p>
+    </footer>
+
+    <script>
+        const toggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        toggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-open');
+        });
+
+        // Close mobile menu when a link is clicked
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName.toLowerCase() === 'a') {
+                navLinks.classList.remove('nav-open');
+            }
+        });
+    </script>
+</body>
+</html>
